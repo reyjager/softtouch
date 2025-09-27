@@ -41,6 +41,8 @@ class AppUser extends HiveObject {
   @HiveField(7)
   DateTime updatedAt;
 
+
+  
   AppUser({
     required this.id,
     required this.name,
@@ -52,4 +54,11 @@ class AppUser extends HiveObject {
     DateTime? updatedAt,
   }) : createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
+
+@override
+  String toString() {
+    return 'AppUser{id: $id, name: $name, email: $email, phone: $phone, profileImage: $profileImage, role: $role, createdAt: $createdAt, updatedAt: $updatedAt}';
+  }
+
 }
+

@@ -5,9 +5,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:softtouch/app_widget.dart';
 import 'package:softtouch/model/app_user.dart';
+import 'package:softtouch/services/firebase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await FirebaseService.initialize();
+  
   final directory = await getApplicationDocumentsDirectory();
   Hive
     ..init(directory.path)

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:softtouch/controllers/auth_controller.dart';
 import 'package:softtouch/modules/home/home_view.dart';
+import 'package:softtouch/modules/auth/login/login_view.dart';
 import 'package:softtouch/modules/splash_screen/animate_title.dart';
+import 'package:softtouch/services/firebase_service.dart';
 
 // --- Splash Screen ---
 class SplashScreen extends StatefulWidget {
@@ -14,12 +18,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => HomeView()),
-      );
-    });
+    _initializeAndNavigate();
+  }
+  
+  Future<void> _initializeAndNavigate() async {
+    await Future.delayed(const Duration(seconds: 4));
+    
+    final AuthController authController = Get.put(AuthController());
+    
+    if (FirebaseService.isInitialized && authController.isLoggedIn) {
+      Get.offAll(() => const HomeView());
+    } else {
+      Get.offAll(() => LoginView());
+    }
   }
 
   @override

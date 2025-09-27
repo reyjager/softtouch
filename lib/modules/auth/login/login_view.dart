@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../home/home_view.dart';
+import '../sign_up/sign_up_view.dart';
 
 class LoginView extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final AuthController authController = Get.find<AuthController>();
 
  LoginView({super.key});
 
@@ -44,8 +49,16 @@ class LoginView extends StatelessWidget {
 
               // Login Button
               ElevatedButton(
-                onPressed: () {
-                  // Call login function in ViewModel
+                onPressed: () async {
+                  final error = await authController.signIn(
+                    emailController.text.trim(),
+                    passwordController.text.trim(),
+                  );
+                  if (error == null) {
+                    Get.offAll(() => const HomeView());
+                  } else {
+                    Get.snackbar('Login Failed', error, backgroundColor: Colors.red, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
@@ -61,7 +74,7 @@ class LoginView extends StatelessWidget {
                   const Text("Don’t have an account? "),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, "/signup");
+                      Get.to(() => SignupView());
                     },
                     child: const Text(
                       "Sign up",

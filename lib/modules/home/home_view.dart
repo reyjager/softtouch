@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:softtouch/controllers/auth_controller.dart';
 import 'package:softtouch/controllers/navigation_controller.dart';
 import 'package:softtouch/modules/drawer/drawer_view.dart';
+import '../auth/login/login_view.dart';
 import '../booking/booking_view.dart';
 import '../cart/cart_view.dart';
 import '../profile/profile_view.dart';
@@ -73,25 +75,34 @@ class _HomeContent extends StatelessWidget {
                         child: const Icon(Icons.menu, size: 28),
                       ),
                     const SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:  [
-                        
-                        Text(
-                          "Hello, Cara",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:  [
+                          
+                          Text(
+                            "Hello, Cara",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "Welcome to Beauty Salon",
-                          style: TextStyle(fontSize: 14, color: Colors.black54),
-                        ),
-                      ],
+                          SizedBox(height: 4),
+                          Text(
+                            "Welcome to Beauty Salon",
+                            style: TextStyle(fontSize: 14, color: Colors.black54),
+                          ),
+                        ],
+                      ),
                     ),
-                    
+                    IconButton(
+                      onPressed: () async {
+                        final authController = Get.find<AuthController>();
+                        await authController.signOut();
+                        Get.offAll(() => LoginView());
+                      },
+                      icon: const Icon(Icons.logout),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),

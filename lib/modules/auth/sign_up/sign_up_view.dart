@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:get/get.dart';
+import 'package:softtouch/controllers/auth_controller.dart';
 import 'package:softtouch/model/app_user.dart';
 import 'package:softtouch/modules/auth/sign_up/animated_button.dart';
 import 'package:softtouch/modules/auth/sign_up/sign_up_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import '../login/login_view.dart';
 
 class SignupView extends StatelessWidget {
 
@@ -14,7 +16,22 @@ class SignupView extends StatelessWidget {
     return ViewModelBuilder<SignupViewModel>.reactive(
       viewModelBuilder: () => SignupViewModel(),
       builder: (context, vm, child) => Scaffold(
-        body: PageView(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              if (vm.pageController.hasClients && vm.pageController.page == 1) {
+                vm.previousStep();
+              } else {
+                Get.back();
+              }
+            },
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: PageView(
           controller: vm.pageController,
           physics: NeverScrollableScrollPhysics(),
           children: [
@@ -29,18 +46,27 @@ class SignupView extends StatelessWidget {
                     style: TextStyle(fontSize: 24),
                   ),
                   TextField(
+                    controller: vm.nameController,
                     onChanged: vm.updateName,
                     decoration: InputDecoration(hintText: "Name"),
                   ),
                   SizedBox(height: 16),
                   TextField(
+                    controller: vm.emailController,
                     onChanged: vm.updateEmail,
                     decoration: InputDecoration(hintText: "Email"),
+                  ),
+                  SizedBox(height: 16),
+                  TextField(
+                    controller: vm.passwordController,
+                    onChanged: vm.updatePassword,
+                    obscureText: true,
+                    decoration: InputDecoration(hintText: "Password"),
                   ),
                   SizedBox(height: 32),
                   AnimatedBounceButton(
                     text: "Next",
-                    enabled: vm.name.isNotEmpty && vm.email.isNotEmpty,
+                    enabled: vm.name.isNotEmpty && vm.email.isNotEmpty && vm.password.isNotEmpty,
                     onPressed: vm.nextStep,
                   ),
                 ],
@@ -54,6 +80,7 @@ class SignupView extends StatelessWidget {
                 children: [
                   Text("Your phone number?", style: TextStyle(fontSize: 24)),
                   TextField(
+                    controller: vm.phoneController,
                     onChanged: vm.updatePhone,
                     decoration: InputDecoration(hintText: "Phone"),
                   ),
@@ -79,17 +106,27 @@ class SignupView extends StatelessWidget {
                   AnimatedBounceButton(
                     text: "Sign Up",
                     enabled: vm.phone.isNotEmpty,
-                    onPressed: () async {
-                      await vm.signup();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Signup complete! 🎉")),
-                      );
-                    },
+                                    onPressed: () async {
+                                    final authController = Get.find<AuthController>();
+                                    final error = await authController.signUp(
+                  vm.email,
+                  vm.password,
+                                    );
+                                    if (error == null) {
+                  await vm.signup();
+                  Get.snackbar('Success', 'Account created successfully! Please sign in.', backgroundColor: Colors.green, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+                  Get.offAll(() => LoginView());
+                                    } else {
+                  String message = error.contains('Email is already registered') ? 'Email is already in use' : error;
+                  Get.snackbar('Sign Up Failed', message, backgroundColor: Colors.red, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+                                    }
+                                    },
                   ),
                 ],
               ),
             ),
           ],
+          ),
         ),
       ),
     );
