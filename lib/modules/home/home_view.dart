@@ -1,14 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:softtouch/controllers/navigation_controller.dart';
 import 'package:softtouch/modules/drawer/drawer_view.dart';
+import '../booking/booking_view.dart';
+import '../cart/cart_view.dart';
+import '../profile/profile_view.dart';
+import 'home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final NavigationController navController = Get.put(NavigationController());
+    
+    final List<Widget> pages = [
+      const _HomeContent(),
+      const BookingView(),
+      const CartView(),
+      const ProfileView(),
+    ];
+
+    return Scaffold(
+      extendBody: true,
+      body: Obx(() => pages[navController.currentIndex.value]),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        currentIndex: navController.currentIndex.value,
+        selectedItemColor: Colors.pink,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        onTap: navController.changeIndex,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Schedule"),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Cart"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
+      )),
+    );
+  }
+}
+
+class _HomeContent extends StatelessWidget {
+  const _HomeContent();
+  
+  static final HomeViewmodel _viewModel = HomeViewmodel();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.pink[50],
-  drawer: DrawerView(),
+      drawer: DrawerView(),
       
       body: Builder(
         builder: (context) => SafeArea(
@@ -115,18 +161,21 @@ class HomeView extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     children: [
                       _buildSpecialistCard(
+                        context,
                         "Alison Leman",
                         "Masseur",
                         4.0,
                         "https://i.pravatar.cc/150?img=1",
                       ),
                       _buildSpecialistCard(
+                        context,
                         "Cara Sweet",
                         "Stylist",
                         5.0,
                         "https://i.pravatar.cc/150?img=2",
                       ),
                       _buildSpecialistCard(
+                        context,
                         "Tonya Jey",
                         "Makeup Artist",
                         4.5,
@@ -185,25 +234,7 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-      // Bottom navigation bar
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: "Schedule",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: "Cart",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
-      ),
+
     );
   }
 
@@ -226,6 +257,7 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildSpecialistCard(
+    BuildContext context,
     String name,
     String role,
     double rating,
@@ -233,13 +265,15 @@ class HomeView extends StatelessWidget {
   ) {
     return Padding(
       padding: const EdgeInsets.only(right: 16),
-      child: Container(
-        width: 140,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
+      child: GestureDetector(
+        onTap: () => _viewModel.navigateToBooking(),
+        child: Container(
+          width: 140,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.vertical(
@@ -284,6 +318,7 @@ class HomeView extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

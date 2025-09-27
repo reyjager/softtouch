@@ -3,17 +3,17 @@ import 'package:softtouch/services/themes/core/app_theme.dart';
 
 class LamsatLightThemeColurScheme implements LamsatAppColorScheme {
   final MaterialColor _primaryColor =
-      MaterialColor(Color.fromARGB(255, 0, 108, 41).value, const {
-        50: Color.fromRGBO(0, 108, 41, .1),
-        100: Color.fromRGBO(0, 108, 41, .2),
-        200: Color.fromRGBO(0, 108, 41, .3),
-        300: Color.fromRGBO(0, 108, 41, .4),
-        400: Color.fromRGBO(0, 108, 41, .5),
-        500: Color.fromRGBO(0, 108, 41, .6),
-        600: Color.fromRGBO(0, 108, 41, .7),
-        700: Color.fromRGBO(0, 108, 41, .8),
-        800: Color.fromRGBO(0, 108, 41, .9),
-        900: Color.fromRGBO(0, 108, 41, 1),
+      MaterialColor(Color.fromARGB(255, 244, 143, 177).value, const {
+        50: Color.fromRGBO(255, 244, 143, .1),
+        100: Color.fromRGBO(255, 244, 143, .2),
+        200: Color.fromRGBO(255, 244, 143, .3),
+        300: Color.fromRGBO(255, 244, 143, .4),
+        400: Color.fromRGBO(255, 244, 143, .5),
+        500: Color.fromRGBO(255, 244, 143, .6),
+        600: Color.fromRGBO(255, 244, 143, .7),
+        700: Color.fromRGBO(255, 244, 143, .8),
+        800: Color.fromRGBO(255, 244, 143, .9),
+        900: Color.fromRGBO(255, 244, 143, 1),
       });
 
   final MaterialColor _secondaryColor =

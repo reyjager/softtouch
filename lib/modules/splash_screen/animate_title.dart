@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class AnimatedTitle extends StatelessWidget {
-  String title;
-   AnimatedTitle({super.key, required this.title});
+  final String title;
+  const AnimatedTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AnimatedTitle extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
-            speed: const Duration(milliseconds: 200), // typing speed
+            speed: const Duration(milliseconds: 100), // typing speed
           ),
         ],
       ),

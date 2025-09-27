@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:softtouch/services/themes/theme_service.dart';
 
 class AdvancedNavBar extends StatefulWidget {
   final int currentIndex;
@@ -31,10 +32,10 @@ class AdvancedNavBar extends StatefulWidget {
 class _AdvancedNavBarState extends State<AdvancedNavBar> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final selectedColor = widget.selectedColor ?? theme.colorScheme.primary;
-    final unselectedColor = widget.unselectedColor ?? theme.colorScheme.onSurface.withOpacity(0.6);
-    final backgroundColor = widget.backgroundColor ?? theme.bottomAppBarTheme.color ?? theme.scaffoldBackgroundColor;
+    final theme = LamsatThemeService.currentColorScheme.primaryColor;
+    final selectedColor = widget.selectedColor ?? LamsatThemeService.currentColorScheme.primaryColor;
+    final unselectedColor = widget.unselectedColor ?? LamsatThemeService.currentColorScheme.primaryColor[100];
+    final backgroundColor = widget.backgroundColor ?? LamsatThemeService.currentColorScheme.primaryColor;
 
     return Container(
       height: widget.height + MediaQuery.of(context).padding.bottom,

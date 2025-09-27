@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "130531998295",
+    "project_id": "softtouch-ca86c",
+    "storage_bucket": "softtouch-ca86c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130531998295:android:9d44db9ce97605636c4112",
+        "android_client_info": {
+          "package_name": "com.example.softtouch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFUJN3_gzqHVriddFsOms78A7PUJZQkDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@ import 'package:softtouch/modules/splash_screen/animate_title.dart';
 
 // --- Splash Screen ---
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  SplashScreen();
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -14,11 +14,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Delay for 3 seconds then navigate
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeView()),
+        MaterialPageRoute(builder: (_) => HomeView()),
       );
     });
   }
@@ -26,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[200],
+      backgroundColor: const Color.fromARGB(255, 244, 143, 177),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

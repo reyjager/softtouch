@@ -14,12 +14,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      title: 'SoftTouch',
       debugShowCheckedModeBanner: false,
-     
-      theme: ThemeData(
-        fontFamily: 'Cairo',
-      ),
       home: SplashScreen(),
+      getPages: [
+        GetPage(name: '/home', page: () => HomeView()),
+      ],
+      
     );
   }
 }
